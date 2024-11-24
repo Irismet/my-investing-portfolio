@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список сделок</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <button id="buy_security">
+        <a href="{{ url_for('buy_security') }}">Купля</a>
+    </button>
+
+    <h1>Список всех сделок</h1>
+
+    <!-- Форма для фильтрации -->
+    <div class="filter-form">
+        <form method="get" action="{{ url_for('index') }}">
+            <label for="deal_date">Дата сделки:</label>
+            <input type="date" name="deal_date" id="deal_date" value="{{ request.args.get('deal_date', '') }}">
+            
+            <label for="security_type">Тип ЦБ:</label>
+            <select name="security_type" id="security_type">
+                <option value="">Все</option>
+                {% for type in security_types %}
+                    <option value="{{ type.id }}" {% if request.args.get('security_type') == (type.id) %}selected{% endif %}>{{ type.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="exchange">Биржа:</label>
+            <select name="exchange" id="exchange">
+                <option value="">Все</option>
+                {% for ex in exchanges %}
+                    <option value="{{ ex.id }}" {% if request.args.get('exchange') == (ex.id) %}selected{% endif %}>{{ ex.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="broker">Брокер:</label>
+            <select name="broker" id="broker">
+                <option value="">Все</option>
+                {% for br in brokers %}
+                    <option value="{{ br.id }}" {% if request.args.get('broker') == (br.id) %}selected{% endif %}>{{ br.name }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Применить фильтры</button>
+        </form>
+    </div>
+
+    <!-- Таблица сделок -->
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th><a href="{{ url_for('index', sort_by='security_type_name', sort_direction='asc' if sort_by != 'security_type_name' or sort_direction == 'desc' else 'desc') }}">Тип ЦБ</a></th>
+                    <th>Тикер</th>
+                    <th>Название ЦБ</th>
+                    <th>Описание ЦБ</th>
+                    <th>Биржа</th>
+                    <th>Брокер</th>
+                    <th>Валюта</th>
+                    <th><a href="{{ url_for('index', sort_by='deal_date', sort_direction='asc' if sort_by != 'deal_date' or sort_direction == 'desc' else 'desc') }}">Дата сделки</a></th>
+                    <th><a href="{{ url_for('index', sort_by='quantity', sort_direction='asc' if sort_by != 'quantity' or sort_direction == 'desc' else 'desc') }}">Количество</a></th>
+                    <th><a href="{{ url_for('index', sort_by='price', sort_direction='asc' if sort_by != 'price' or sort_direction == 'desc' else 'desc') }}">Стоимость 1 ЦБ</a></th>
+                    <th><a href="{{ url_for('index', sort_by='amount', sort_direction='asc' if sort_by != 'amount' or sort_direction == 'desc' else 'desc') }}">Сумма сделки</a></th>
+                    <th><a href="{{ url_for('index', sort_by='has_dividends', sort_direction='asc' if sort_by != 'has_dividends' or sort_direction == 'desc' else 'desc') }}">Дивиденды</a></th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for security, deal, security_type, exchange, broker, currency in deals %}
+                    <tr>
+                        <td>{{ security_type.name }}</td>
+                        <td>{{ security.ticker }}</td>
+                        <td>{{ security.name }}</td>
+                        <td>{{ security.description }}</td>
+                        <td>{{ exchange.name }}</td>
+                        <td>{{ broker.name }}</td>
+                        <td>{{ currency.name }}</td>
+                        <td class="date-cell">{{ deal.deal_date.strftime('%Y-%m-%d') }}</td>
+                        <td>{{ deal.quantity }}</td>
+                        <td>{{ deal.price }}</td>
+                        <td>{{ deal.amount }}</td>
+                        <td>
+                            <div class="{{ 'yes' if security.has_dividends else 'no' }}">
+                                {{ 'Да' if security.has_dividends else 'Нет' }}
+                            </div>
+                        </td>
+                        <td><a href="{{ url_for('edit_deal', deal_id=deal.id) }}">Редактировать</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

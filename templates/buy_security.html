@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Buy Security</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function calculateAmount() {
+            // Получаем значения quantity и price
+            const quantity = parseFloat(document.getElementById('quantity').value) || 0;
+            const price = parseFloat(document.getElementById('price').value) || 0;
+
+            // Рассчитываем сумму сделки
+            const amount = quantity * price;
+
+            // Заполняем поле amount результатом
+            document.getElementById('amount').value = amount.toFixed(2);
+        }
+    </script>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Купля ценной бумаги</h1>
+        <form method="post">
+
+            <label for="deal_date">Дата сделки:</label>
+            <input type="date" name="deal_date" required>
+
+            <label for="security_type_id">Вид ценной бумаги:</label>
+            <select name="security_type_id" id="security_type_id" required>
+                {% for security_type in security_types %}
+                    <option value="{{ security_type.id }}">{{ security_type.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="exchange_id">Биржа:</label>
+            <select name="exchange_id" required>
+                {% for exchange in exchanges %}
+                    <option value="{{ exchange.id }}">{{ exchange.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="broker_id">Брокер:</label>
+            <select name="broker_id" required>
+                {% for broker in brokers %}
+                    <option value="{{ broker.id }}">{{ broker.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="security_name">Название ценной бумаги:</label>
+            <input type="text" name="security_name" required>
+
+            <label for="description">Описание ценной бумаги:</label>
+            <textarea name="description" rows="4"></textarea>
+
+            <label for="ticker">Тикер:</label>
+            <input type="text" name="ticker" required>
+
+            <label for="currency_id">Валюта:</label>
+            <select name="currency_id" required>
+                {% for currency in currencies %}
+                    <option value="{{ currency.id }}">{{ currency.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="price">Цена 1 бумаги:</label>
+            <input type="number" name="price" id="price" min="0" step="0.01" required oninput="calculateAmount()">
+
+            <label for="quantity">Количество:</label>
+            <input type="number" name="quantity" id="quantity" required oninput="calculateAmount()">
+                
+            <label for="amount">Сумма сделки:</label>
+            <input type="number" min="0" step="0.01" name="amount" id="amount" required readonly>
+
+            <label for="has_dividends">Есть ли дивиденды:</label>
+            <input type="radio" name="has_dividends" value="True"> Да
+            <input type="radio" name="has_dividends" value="False"> Нет
+            <br></br>
+            
+            <button type="submit">Купить</button>
+        </form>
+    </div>
+</body>
+</html>

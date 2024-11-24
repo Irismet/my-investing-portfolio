@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список сделок</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div id="title_table">
+        <h1>Список всех сделок</h1>
+    </div>
+    </br>
+    <table border=3 colspan=26>
+        <thead>
+            <tr>
+                <th>Тип ЦБ</th>
+                <th>Тикер</th>
+                <th>Название ЦБ</th>
+                <th>Описание ЦБ</th>
+                <th>Биржа</th>
+                <th>Брокер</th>
+                <th>Валюта</th>
+                <th>Дата сделки</th>
+                <th>Количество</th>
+                <th>Стоимость 1 ЦБ</th>
+                <th>Сумма сделки</th>
+                <th>Дивиденды</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for security, deal, security_type, exchange, broker, currency in deals %}
+                <tr>
+                    <td>{{ security_type.name }}</td>
+                    <td>{{ security.ticker }}</td>
+                    <td>{{ security.name }}</td>
+                    <td>{{ security.description }}</td>
+                    <td>{{ exchange.name }}</td>
+                    <td>{{ broker.name }}</td>
+                    <td>{{ currency.name }}</td>
+                    <td>{{ deal.deal_date.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ deal.quantity }}</td>
+                    <td>{{ deal.price }}</td>
+                    <td>{{ deal.amount }}</td>
+                    <td>
+                        <div class="{{ 'yes' if security.has_dividends else 'no' }}">
+                            {{ 'Да' if security.has_dividends else 'Нет' }}
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
