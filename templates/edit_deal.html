@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать сделку</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Редактировать сделку</h1>
+    
+    <form method="post" action="{{ url_for('edit_deal', deal_id=deal.id) }}">
+        <label for="deal_date">Дата сделки:</label>
+        <input type="date" id="deal_date" name="deal_date" value="{{ deal.deal_date.strftime('%Y-%m-%d') }}" required>
+
+        <label for="security_type">Тип ЦБ:</label>
+        <select name="security_type" id="security_type" required>
+            {% for type in security_types %}
+                <option value="{{ type.id }}" {% if security.security_type_id == type.id %}selected{% endif %}>{{ type.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="exchange">Биржа:</label>
+        <select name="exchange" id="exchange" required>
+            {% for ex in exchanges %}
+                <option value="{{ ex.id }}" {% if security.exchange_id == ex.id %}selected{% endif %}>{{ ex.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="broker">Брокер:</label>
+        <select name="broker" id="broker" required>
+            {% for br in brokers %}
+                <option value="{{ br.id }}" {% if deal.broker_id == br.id %}selected{% endif %}>{{ br.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="security_name">Название ЦБ:</label>
+        <input type="text" id="security_name" name="security_name" value="{{ security.name }}" required>
+
+        <label for="description">Описание:</label>
+        <textarea id="description" name="description">{{ security.description }}</textarea>
+
+        <label for="ticker">Тикер:</label>
+        <input type="text" id="ticker" name="ticker" value="{{ security.ticker }}" required>
+
+        <label for="currency">Валюта:</label>
+        <select name="currency" id="currency" required>
+            {% for currency in currencies %}
+                <option value="{{ currency.id }}" {% if security.currency_id == currency.id %}selected{% endif %}>{{ currency.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="has_dividends">Дивиденды:</label>
+        <input type="radio" id="has_dividends_yes" name="has_dividends" value="yes" {% if security.has_dividends %}checked{% endif %}> Да
+        <input type="radio" id="has_dividends_no" name="has_dividends" value="no" {% if not security.has_dividends %}checked{% endif %}> Нет
+
+        <label for="quantity">Количество:</label>
+        <input type="number" id="quantity" name="quantity" value="{{ deal.quantity }}" required>
+
+        <label for="price">Стоимость 1 ЦБ:</label>
+        <input type="number" id="price" name="price" value="{{ deal.price }}" step="0.01" required>
+
+        <button type="submit">Сохранить изменения</button>
+    </form>
+</body>
+</html>

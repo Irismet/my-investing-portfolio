@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Security</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Add New Security</h1>
+        <form method="post">
+            <label for="name">Name:</label>
+            <input type="text" name="name" required>
+
+            <label for="description">Description:</label>
+            <textarea name="description" rows="4"></textarea>
+
+            <label for="type">Type:</label>
+            <input type="text" name="type" required>
+
+            <label for="ticker">Ticker:</label>
+            <input type="text" name="ticker" required>
+
+            <label for="currency_id">Currency ID:</label>
+            <input type="number" name="currency_id" required>
+
+            <label for="exchange_id">Exchange ID:</label>
+            <input type="number" name="exchange_id" required>
+
+            <label for="has_dividends">Has Dividends:</label>
+            <input type="checkbox" name="has_dividends">
+
+            <button type="submit">Add Security</button>
+        </form>
+    </div>
+</body>
+</html>

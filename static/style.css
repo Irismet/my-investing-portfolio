@@ -1,0 +1,159 @@
+/* Основные стили для формы */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+
+.form-container {
+    background-color: #ffffff;
+    padding: 40px 80px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+}
+
+h1 {
+    text-align: center;
+    color: #333333;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    color: #333333;
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0 15px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+button {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Стили для выпадающих списков и радиокнопок */
+select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0 15px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+h1 {
+    text-align: center;
+    color: #4a90e2;
+    margin-top: 20px;
+}
+
+/* Стили для контейнера таблицы */
+.table-container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Стили таблицы */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+}
+
+/* Стили для заголовков таблицы */
+thead th {
+    background-color: #4a90e2;
+    color: #fff;
+    text-align: left;
+    padding: 12px;
+    font-weight: bold;
+}
+
+/* Стили для строк таблицы */
+tbody tr:nth-child(even) {
+    background-color: #f2f4f7;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #e0e4e8;
+}
+
+/* Стили для ховера */
+tbody tr:hover {
+    background-color: #eaf3ff;
+}
+
+/* Стили для текста в колонках */
+tbody td, thead th {
+    text-align: center;
+}
+
+/* Стили для ячеек, отображающих "Да"/"Нет" */
+tbody td div {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 12px;
+    color: #fff;
+}
+
+tbody td div.yes {
+    background-color: #4caf50;
+}
+
+tbody td div.no {
+    background-color: #f44336;
+}
+
+/* Стили для ячейки с датой */
+tbody td.date-cell {
+    color: #555;
+    font-weight: bold;
+}
